@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Сначала спроси ИИ — Стандарт компании</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800;900&family=Onest:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--dark:#0c1220;--primary:#1a2744;--accent:#ff3d5a;--blue:#3b82f6;--green:#10b981;--green-light:#d1fae5;--red-light:#fee2e2;--purple:#8b5cf6;--purple-light:#ede9fe;--cyan:#22d3ee;--surface:#f8fafc;--card:#fff;--text:#1e293b;--muted:#64748b;--border:#e2e8f0;--font-d:'Unbounded',sans-serif;--font-b:'Onest',sans-serif;--shadow:0 20px 80px rgba(2,6,23,.28)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-b);color:var(--text);background:#050a14;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+/* ===== SCROLL PROGRESS ===== */
+.prog{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--cyan),var(--accent),var(--purple));z-index:9999;box-shadow:0 0 14px rgba(34,211,238,.5)}
+
+/* ===== NAV ===== */
+.nav{position:fixed;top:14px;left:18px;right:18px;z-index:100;background:rgba(8,13,28,.62);backdrop-filter:blur(26px) saturate(150%);border:1px solid rgba(255,255,255,.08);box-shadow:0 12px 50px rgba(2,6,23,.22);border-radius:18px;padding:0 2rem;transition:transform .35s cubic-bezier(.16,1,.3,1)}
+.nav.hide{transform:translateY(-120%)}
+.nav-in{max-width:1240px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:62px}
+.nav-logo{font-family:var(--font-d);font-weight:800;color:#fff;font-size:1rem;letter-spacing:1px}
+.nav-logo span{color:var(--accent);text-shadow:0 0 24px rgba(255,61,90,.35)}
+.nav-cta{display:inline-flex;align-items:center;gap:6px;background:var(--accent);color:#fff;padding:8px 18px;border-radius:100px;font-size:.82rem;font-weight:700;text-decoration:none;transition:all .3s;box-shadow:0 4px 20px rgba(255,61,90,.3)}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(255,61,90,.4)}
+
+/* ===== HERO ===== */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:7rem 2rem 4rem;background:radial-gradient(circle at 18% 20%,rgba(34,211,238,.12),transparent 22%),radial-gradient(circle at 80% 18%,rgba(168,85,247,.16),transparent 24%),linear-gradient(135deg,#070d19,#0c1220 30%,#101b35 66%,#11223d)}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 700px 420px at 20% 50%,rgba(59,130,246,.10),transparent),radial-gradient(ellipse 560px 560px at 80% 30%,rgba(255,61,90,.08),transparent),radial-gradient(ellipse 460px 360px at 50% 88%,rgba(34,211,238,.09),transparent)}
+.hero-grid{position:absolute;inset:-20%;opacity:.07;background-image:linear-gradient(rgba(255,255,255,.22) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.22) 1px,transparent 1px);background-size:60px 60px;transform:perspective(900px) rotateX(70deg) translateY(-6%);transform-origin:center top;animation:gridDrift 26s linear infinite}
+@keyframes gridDrift{from{transform:perspective(900px) rotateX(70deg) translate3d(0,-6%,0)}to{transform:perspective(900px) rotateX(70deg) translate3d(0,4%,0)}}
+.hero-orbit,.hero-orbit::before,.hero-orbit::after{position:absolute;border-radius:50%}
+.hero-orbit{width:560px;height:560px;border:1px solid rgba(255,255,255,.06);top:50%;left:50%;transform:translate(-50%,-50%);animation:spin 30s linear infinite}
+.hero-orbit::before{content:'';inset:40px;border:1px dashed rgba(34,211,238,.18)}
+.hero-orbit::after{content:'';inset:120px;border:1px solid rgba(168,85,247,.18)}
+.orb-dot{position:absolute;border-radius:50%}
+.orb-d1{width:14px;height:14px;background:linear-gradient(135deg,var(--cyan),#fff);box-shadow:0 0 22px rgba(34,211,238,.8);top:12%;left:74%}
+.orb-d2{width:10px;height:10px;background:linear-gradient(135deg,var(--accent),#fff);box-shadow:0 0 18px rgba(255,61,90,.75);top:74%;left:14%}
+.orb-d3{width:12px;height:12px;background:linear-gradient(135deg,var(--purple),#fff);box-shadow:0 0 18px rgba(168,85,247,.8);top:26%;left:20%}
+@keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+.hero-c{position:relative;text-align:center;max-width:960px;animation:fadeUp 1s ease-out}
+@keyframes fadeUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+.badge{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(90deg,rgba(255,61,90,.13),rgba(34,211,238,.12));border:1px solid rgba(255,255,255,.14);color:#fff;border-radius:100px;padding:7px 18px;font-size:.78rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:2rem;box-shadow:0 8px 30px rgba(15,23,42,.22)}
+.badge::before{content:'';width:7px;height:7px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.hero h1{font-family:var(--font-d);font-weight:900;font-size:clamp(3rem,7vw,5.5rem);color:#fff;line-height:1;margin-bottom:1.5rem;letter-spacing:-.03em}
+.hero h1 .a1{color:var(--accent);display:inline-block;text-shadow:0 0 30px rgba(255,61,90,.4)}
+.hero h1 .a2{background:linear-gradient(90deg,var(--cyan),#fff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-sub{color:rgba(255,255,255,.6);font-size:1.2rem;max-width:640px;margin:0 auto 2.5rem;font-weight:300;line-height:1.8}
+.hero-cta{display:inline-flex;align-items:center;gap:10px;background:var(--accent);color:#fff;padding:16px 36px;border-radius:16px;font-size:1.1rem;font-weight:700;text-decoration:none;box-shadow:0 10px 40px rgba(255,61,90,.35);transition:all .3s;position:relative;overflow:hidden}
+.hero-cta:hover{transform:translateY(-3px);box-shadow:0 16px 50px rgba(255,61,90,.45)}
+.hero-cta::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);transition:left .6s}
+.hero-cta:hover::after{left:100%}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;max-width:700px;margin:3rem auto 0}
+.h-stat{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(18px);border-radius:18px;padding:1.4rem 1rem;text-align:center}
+.h-stat-num{font-family:var(--font-d);font-weight:900;font-size:2rem;color:#fff;line-height:1.1;margin-bottom:.3rem}
+.h-stat-num span{color:var(--cyan)}
+.h-stat-label{color:rgba(255,255,255,.4);font-size:.78rem;letter-spacing:1px;text-transform:uppercase}
+
+/* ===== CONVEYOR ===== */
+.conv{overflow:hidden;background:var(--dark);padding:.65rem 0;border-top:1px solid rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.04)}
+.conv-track{display:flex;gap:3rem;animation:convey 20s linear infinite;white-space:nowrap}
+.conv-track span{color:rgba(255,255,255,.10);font-family:var(--font-d);font-weight:800;font-size:.72rem;letter-spacing:4px;text-transform:uppercase}
+@keyframes convey{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ===== LIGHT SECTIONS ===== */
+.light{background:radial-gradient(circle at top,#f8fbff,#f2f7fb 42%,#edf3f8);position:relative}
+.light::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 12% 14%,rgba(34,211,238,.06),transparent 24%),radial-gradient(circle at 88% 10%,rgba(168,85,247,.05),transparent 24%)}
+.light::after{content:'';position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(15,23,42,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(15,23,42,.03) 1px,transparent 1px);background-size:36px 36px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.15),transparent 20%,transparent 80%,rgba(0,0,0,.10))}
+section{padding:5rem 2rem;position:relative;z-index:1}
+.container{max-width:1100px;margin:0 auto}
+.slabel{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-d);font-weight:600;font-size:.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:.8rem}
+.slabel::before{content:'';width:20px;height:2px;background:var(--accent)}
+.stitle{font-family:var(--font-d);font-weight:900;font-size:clamp(1.8rem,4vw,2.8rem);color:var(--text);line-height:1.15;margin-bottom:.8rem}
+.stitle.white{color:#fff}
+.sdesc{color:var(--muted);font-size:1.05rem;max-width:600px;margin-bottom:2.5rem;line-height:1.7}
+
+/* ===== BIG QUOTE (CEO) ===== */
+.ceo-block{max-width:820px;margin:0 auto;position:relative}
+.ceo-bg{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:3rem 3rem 2.5rem;box-shadow:0 12px 50px rgba(0,0,0,.05);position:relative;overflow:hidden;transition:box-shadow .4s}
+.ceo-bg:hover{box-shadow:0 20px 70px rgba(0,0,0,.08),0 0 0 1px rgba(34,211,238,.1)}
+.ceo-bg::before{content:'"';position:absolute;top:-12px;left:12px;font-size:8rem;color:rgba(26,39,68,.05);font-family:Georgia,serif;line-height:1;pointer-events:none}
+.ceo-bg p{color:var(--text);font-size:1.08rem;line-height:1.9;margin-bottom:1rem}
+.ceo-link{display:inline-flex;align-items:center;gap:8px;background:var(--primary);color:#fff;padding:10px 22px;border-radius:12px;text-decoration:none;font-weight:600;font-size:.95rem;margin-top:1rem;transition:all .3s}
+.ceo-link:hover{background:#243656;transform:translateY(-2px);box-shadow:0 8px 20px rgba(26,39,68,.2)}
+.ceo-sig{margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);display:flex;align-items:center;gap:14px}
+.ceo-ava{width:56px;height:56px;border-radius:50%;background:var(--primary);display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--font-d);font-weight:800;font-size:1.1rem;flex-shrink:0}
+
+/* ===== IMPACT NUMBERS ===== */
+.impact{background:var(--dark);padding:4rem 2rem;position:relative;overflow:hidden}
+.impact::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 50%,rgba(34,211,238,.08),transparent 40%),radial-gradient(circle at 70% 40%,rgba(255,61,90,.06),transparent 35%)}
+.impact-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;max-width:1000px;margin:0 auto;position:relative;z-index:1}
+.impact-card{text-align:center;padding:2rem 1rem}
+.impact-num{font-family:var(--font-d);font-weight:900;font-size:clamp(2.2rem,5vw,3.2rem);line-height:1;margin-bottom:.5rem}
+.impact-num.cyan{color:var(--cyan)}
+.impact-num.accent{color:var(--accent)}
+.impact-num.purple{color:var(--purple)}
+.impact-num.green{color:var(--green)}
+.impact-label{color:rgba(255,255,255,.45);font-size:.85rem;line-height:1.4}
+
+/* ===== DEFINITION ===== */
+.def-card{background:linear-gradient(135deg,#09101e,#0f1c34,#112644);border-radius:28px;padding:3rem;color:#fff;position:relative;overflow:hidden;margin-bottom:2.5rem;border:1px solid rgba(255,255,255,.08);box-shadow:var(--shadow);animation:glowP 4s ease-in-out infinite alternate}
+.def-card::after{content:'';position:absolute;top:-50%;right:-20%;width:400px;height:400px;border-radius:50%;background:rgba(255,61,90,.06)}
+.def-card p{position:relative;z-index:1;font-size:1.35rem;font-weight:300;line-height:1.8;max-width:700px}
+.def-card strong{color:var(--accent);font-weight:600}
+@keyframes glowP{from{box-shadow:var(--shadow),0 0 0 rgba(34,211,238,0)}to{box-shadow:var(--shadow),0 0 60px rgba(34,211,238,.08)}}
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.col-no{background:var(--red-light);border-radius:16px;padding:2rem}
+.col-yes{background:var(--green-light);border-radius:16px;padding:2rem}
+.col-no h3,.col-yes h3{font-family:var(--font-d);font-weight:700;font-size:1rem;margin-bottom:1rem}
+.col-no h3{color:var(--accent)}.col-yes h3{color:var(--green)}
+.col-no li,.col-yes li{list-style:none;padding:.45rem 0;display:flex;align-items:flex-start;gap:8px;font-size:.95rem;color:var(--text)}
+.col-icon{flex-shrink:0;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;margin-top:2px}
+.col-no .col-icon{background:var(--accent);color:#fff}
+.col-yes .col-icon{background:var(--green);color:#fff}
+
+/* ===== STANDARDS CARDS ===== */
+.std-header{text-align:center;margin-bottom:1.5rem}
+.std-header h3{font-family:var(--font-d);font-weight:800;font-size:1.3rem;color:var(--accent)}
+.std-header p{color:var(--muted);font-size:.95rem;margin-top:.3rem}
+.std-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.std-card{background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(255,255,255,.88));border-radius:20px;padding:1.8rem;border:1px solid rgba(226,232,240,.72);transition:all .35s;position:relative;overflow:hidden;box-shadow:0 10px 30px rgba(15,23,42,.05)}
+.std-card:hover{transform:translateY(-8px) scale(1.01);box-shadow:0 26px 50px rgba(15,23,42,.14),0 0 0 1px rgba(34,211,238,.14);border-color:rgba(34,211,238,.18)}
+.std-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--accent)}
+.std-card::after{content:'';position:absolute;inset:0;background:radial-gradient(220px circle at var(--mx,50%) var(--my,50%),rgba(34,211,238,.10),transparent 42%);opacity:0;transition:opacity .3s;pointer-events:none}
+.std-card:hover::after{opacity:1}
+.std-icon{width:44px;height:44px;border-radius:12px;background:var(--red-light);display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin-bottom:1rem}
+.std-card h4{font-family:var(--font-d);font-weight:700;font-size:.85rem;color:var(--text);margin-bottom:.4rem;line-height:1.4}
+.std-card p{color:var(--muted);font-size:.85rem;line-height:1.6}
+
+/* ===== PRINCIPLES ===== */
+.prin-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1.2rem}
+.prin-card{background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(255,255,255,.90));border-radius:20px;padding:2rem 1.2rem;text-align:center;border:1px solid rgba(226,232,240,.7);transition:all .35s;box-shadow:0 10px 24px rgba(15,23,42,.05);position:relative;overflow:hidden}
+.prin-card:hover{transform:translateY(-8px);box-shadow:0 24px 48px rgba(15,23,42,.12);border-color:rgba(168,85,247,.22)}
+.prin-card::after{content:'';position:absolute;inset:0;background:radial-gradient(220px circle at var(--mx,50%) var(--my,50%),rgba(34,211,238,.10),transparent 42%);opacity:0;transition:opacity .3s;pointer-events:none}
+.prin-card:hover::after{opacity:1}
+.prin-num{width:42px;height:42px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-weight:800;font-size:1rem;margin:0 auto 1rem}
+.prin-card h3{font-family:var(--font-d);font-weight:700;font-size:.85rem;color:var(--text);margin-bottom:.5rem;line-height:1.4}
+.prin-card p{color:var(--muted);font-size:.82rem}
+
+/* ===== TOOLS (DARK) ===== */
+.tools-sec{background:var(--dark);padding:5rem 2rem}
+.tools-sec .slabel{color:var(--accent)}.tools-sec .slabel::before{background:var(--accent)}
+.tools-sec .sdesc{color:rgba(255,255,255,.5)}
+.tcat{margin-bottom:2.5rem}
+.tcat-label{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-d);font-weight:700;font-size:.75rem;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:1rem}
+.tcat-label.appr{background:rgba(16,185,129,.15);color:var(--green);border:1px solid rgba(16,185,129,.3)}
+.tcat-label.reco{background:rgba(59,130,246,.15);color:var(--blue);border:1px solid rgba(59,130,246,.3)}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
+.tcard{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.09);border-radius:18px;padding:1.5rem;transition:all .35s;position:relative;overflow:hidden}
+.tcard:hover{background:rgba(255,255,255,.09);border-color:rgba(34,211,238,.24);transform:translateY(-6px);box-shadow:0 18px 36px rgba(0,0,0,.18)}
+.tcard::before{content:'';position:absolute;inset:0;background:radial-gradient(220px circle at var(--mx,50%) var(--my,50%),rgba(34,211,238,.10),transparent 42%);opacity:0;transition:opacity .3s;pointer-events:none}
+.tcard:hover::before{opacity:1}
+.tcard h4{font-family:var(--font-d);font-weight:700;font-size:.95rem;color:#fff;margin-bottom:.4rem;position:relative;z-index:1}
+.tcard p{color:rgba(255,255,255,.45);font-size:.82rem;line-height:1.5;position:relative;z-index:1}
+.ttag{display:inline-block;margin-top:.8rem;font-size:.7rem;font-weight:600;padding:2px 8px;border-radius:100px;position:relative;z-index:1}
+.ttag.all{background:rgba(255,61,90,.15);color:var(--accent)}.ttag.dev{background:rgba(59,130,246,.15);color:var(--blue)}.ttag.cre{background:rgba(168,85,247,.15);color:#a855f7}.ttag.fin{background:rgba(16,185,129,.15);color:var(--green)}
+
+/* ===== AGENTS ===== */
+.agents-sec{background:var(--purple-light);padding:5rem 2rem}
+.agents-sec .slabel{color:var(--purple)}.agents-sec .slabel::before{background:var(--purple)}
+.agt-exp{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-bottom:3rem;align-items:center}
+.agt-exp-text h3{font-family:var(--font-d);font-weight:700;font-size:1.2rem;color:var(--text);margin-bottom:1rem}
+.agt-exp-text p{color:var(--muted);font-size:1rem;line-height:1.8;margin-bottom:1rem}
+.agt-diag{background:var(--card);border-radius:16px;padding:2rem;border:1px solid var(--border)}
+.agt-step{display:flex;align-items:center;gap:12px;width:100%}
+.agt-num{width:36px;height:36px;border-radius:50%;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-weight:800;font-size:.85rem;flex-shrink:0}
+.agt-arr{color:var(--purple);font-size:1.2rem;margin-left:13px;padding:2px 0}
+.agt-vs{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2.5rem}
+.agt-vs-card{border-radius:14px;padding:1.5rem 1.8rem;border:2px solid}
+.agt-vs-card.manual{background:#fff;border-color:var(--border)}
+.agt-vs-card.agent{background:var(--card);border-color:var(--purple)}
+.agt-vs-card h4{font-family:var(--font-d);font-weight:700;font-size:.85rem;margin-bottom:.8rem}
+.agt-vs-card.manual h4{color:var(--muted)}.agt-vs-card.agent h4{color:var(--purple)}
+.agt-vs-card p{font-size:.88rem;color:var(--muted);line-height:1.6}
+.agt-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
+.agt-card{background:var(--card);border-radius:14px;padding:1.6rem;border:1px solid var(--border);border-left:4px solid var(--purple);transition:all .3s;position:relative;overflow:hidden}
+.agt-card:hover{box-shadow:0 12px 30px rgba(0,0,0,.06);transform:translateY(-3px)}
+.agt-card::after{content:'';position:absolute;inset:0;background:radial-gradient(220px circle at var(--mx,50%) var(--my,50%),rgba(139,92,246,.08),transparent 42%);opacity:0;transition:opacity .3s;pointer-events:none}
+.agt-card:hover::after{opacity:1}
+.agt-dept{font-family:var(--font-d);font-weight:700;font-size:.68rem;letter-spacing:2px;text-transform:uppercase;color:var(--purple);margin-bottom:.5rem}
+.agt-card h4{font-family:var(--font-d);font-weight:700;font-size:.92rem;color:var(--text);margin-bottom:.4rem}
+.agt-card p{color:var(--muted);font-size:.84rem;line-height:1.5}
+
+/* ===== ROLES ===== */
+.roles-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.role-card{background:var(--card);border-radius:18px;border:1px solid var(--border);padding:1.8rem;transition:all .35s;position:relative;overflow:hidden}
+.role-card:hover{box-shadow:0 16px 40px rgba(0,0,0,.07);transform:translateY(-4px);border-color:rgba(34,211,238,.18)}
+.role-card::after{content:'';position:absolute;inset:0;background:radial-gradient(220px circle at var(--mx,50%) var(--my,50%),rgba(34,211,238,.08),transparent 42%);opacity:0;transition:opacity .3s;pointer-events:none}
+.role-card:hover::after{opacity:1}
+.role-hdr{display:flex;align-items:center;gap:10px;margin-bottom:1rem}
+.role-ico{width:46px;height:46px;border-radius:12px;background:#dbeafe;display:flex;align-items:center;justify-content:center;font-size:1.3rem}
+.role-card h3{font-family:var(--font-d);font-weight:700;font-size:.95rem;color:var(--text)}
+.role-card li{list-style:none;padding:.35rem 0;display:flex;align-items:flex-start;gap:6px;font-size:.88rem;color:var(--muted)}
+.role-card li::before{content:'→';color:var(--accent);font-weight:700;flex-shrink:0}
+.role-agt{margin-top:1rem;padding-top:1rem;border-top:1px dashed var(--border)}
+.role-agt-label{font-family:var(--font-d);font-weight:700;font-size:.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--purple);margin-bottom:.4rem}
+.role-agt-item{font-size:.82rem;color:var(--muted);padding:2px 0;display:flex;gap:6px}
+.role-agt-item::before{content:'🤖';flex-shrink:0;font-size:.8rem}
+
+/* ===== PROMPTING ===== */
+.prompt-formula{background:linear-gradient(135deg,#09101e,#0f1c34,#112644);border-radius:20px;padding:2.5rem;text-align:center;margin-bottom:2rem;border:1px solid rgba(255,255,255,.08)}
+.prompt-formula span{font-family:var(--font-d);font-weight:700;font-size:clamp(1rem,2.5vw,1.4rem);color:#fff}
+.prompt-formula span em{color:var(--accent);font-style:normal}
+.prompt-cmp{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.prompt-bad{background:#fef2f2;border:2px solid #fecaca;border-radius:16px;padding:2rem}
+.prompt-good{background:#f0fdf4;border:2px solid #bbf7d0;border-radius:16px;padding:2rem}
+.prompt-bad h3{font-family:var(--font-d);font-weight:700;font-size:.9rem;color:var(--accent);margin-bottom:1rem}
+.prompt-good h3{font-family:var(--font-d);font-weight:700;font-size:.9rem;color:var(--green);margin-bottom:1rem}
+.prompt-ex{background:rgba(0,0,0,.04);border-radius:10px;padding:1rem;margin-bottom:.7rem;font-size:.88rem;color:var(--text);font-style:italic;line-height:1.6}
+
+/* ===== SAFETY ===== */
+.safety-sec{background:#f1f5f9;padding:5rem 2rem;border-radius:32px 32px 0 0}
+.safety-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.safety-can{background:#fff;border:2px solid var(--green);border-radius:20px;padding:2.5rem}
+.safety-cant{background:#fff;border:2px solid var(--accent);border-radius:20px;padding:2.5rem}
+.safety-can h3,.safety-cant h3{font-family:var(--font-d);font-weight:700;font-size:1.1rem;margin-bottom:1rem}
+.safety-can h3{color:var(--green)}.safety-cant h3{color:var(--accent)}
+.safety-can li,.safety-cant li{list-style:none;padding:.45rem 0;display:flex;gap:8px;font-size:.95rem;color:var(--text)}
+
+/* ===== FAQ ===== */
+.faq-list{max-width:720px}
+.faq-item{border-bottom:1px solid var(--border);padding:1.2rem 0;transition:background .3s;border-radius:8px}
+.faq-item:hover{background:rgba(34,211,238,.03)}
+.faq-q{font-family:var(--font-d);font-weight:700;font-size:1rem;color:var(--text);cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:color .2s}
+.faq-q:hover{color:var(--accent)}
+.faq-q .ch{font-size:1.3rem;color:var(--accent);transition:transform .35s;flex-shrink:0;margin-left:1rem}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.16,1,.3,1),opacity .35s;opacity:0}
+.faq-a.open{opacity:1}
+.faq-a p{color:var(--muted);font-size:.95rem;line-height:1.7;padding-top:.6rem}
+
+/* ===== ACADEMY CTA (FULL-WIDTH) ===== */
+.academy{background:linear-gradient(135deg,#070d19,#0c1220 30%,#101b35 66%,#11223d);padding:5rem 2rem;text-align:center;position:relative;overflow:hidden}
+.academy::before{content:'';position:absolute;top:-30%;right:-10%;width:500px;height:500px;border-radius:50%;background:rgba(34,211,238,.06);animation:floaty 8s ease-in-out infinite}
+.academy::after{content:'';position:absolute;bottom:-30%;left:-10%;width:400px;height:400px;border-radius:50%;background:rgba(255,61,90,.05);animation:floaty 10s ease-in-out infinite reverse}
+@keyframes floaty{0%,100%{transform:translate(0,0)}50%{transform:translate(20px,-20px)}}
+.academy .slabel{color:var(--accent)}
+.academy .slabel::before{background:var(--accent)}
+.academy h2{font-family:var(--font-d);font-weight:900;font-size:clamp(1.6rem,4vw,2.4rem);color:#fff;margin-bottom:1rem;position:relative;z-index:1}
+.academy p{color:rgba(255,255,255,.55);font-size:1.05rem;margin-bottom:2rem;line-height:1.7;max-width:540px;margin-left:auto;margin-right:auto;position:relative;z-index:1}
+.acad-btn{display:inline-flex;align-items:center;gap:10px;background:var(--accent);color:#fff;padding:16px 36px;border-radius:16px;text-decoration:none;font-weight:700;font-size:1.1rem;box-shadow:0 10px 40px rgba(255,61,90,.35);transition:all .3s;position:relative;overflow:hidden;z-index:1}
+.acad-btn:hover{transform:translateY(-3px);box-shadow:0 16px 50px rgba(255,61,90,.45)}
+.acad-btn::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);transition:left .6s}
+.acad-btn:hover::after{left:100%}
+
+/* ===== CTA / FOOTER ===== */
+.cta{background:var(--dark);text-align:center;padding:5rem 2rem;position:relative}
+.cta blockquote{font-family:var(--font-d);font-weight:900;font-size:clamp(1.5rem,4vw,2.4rem);color:#fff;line-height:1.35;max-width:620px;margin:0 auto 1.5rem;position:relative}
+.cta blockquote::before{content:'"';position:absolute;top:-.8em;left:-.4em;font-size:6rem;color:rgba(255,61,90,.15);font-family:Georgia,serif;line-height:1}
+.cta .sub{color:var(--accent);font-weight:600;font-size:1.1rem}
+footer{background:var(--dark);padding:2rem;text-align:center;color:rgba(255,255,255,.2);font-size:.8rem;border-top:1px solid rgba(255,255,255,.04)}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:900px){
+  .hero-stats,.cols2,.prompt-cmp,.safety-grid,.agt-exp,.agt-vs{grid-template-columns:1fr}
+  .impact-grid{grid-template-columns:repeat(2,1fr)}
+  .prin-grid{grid-template-columns:repeat(3,1fr)}
+  .std-grid,.roles-grid{grid-template-columns:repeat(2,1fr)}
+  .nav .nav-cta{display:none}
+  .hero-orbit{width:380px;height:380px}
+}
+@media(max-width:600px){
+  .prin-grid{grid-template-columns:repeat(2,1fr)}
+  .std-grid,.roles-grid{grid-template-columns:1fr}
+  .impact-grid{grid-template-columns:1fr 1fr}
+  section{padding:3rem 1.2rem}
+}
+.reveal{opacity:0;transform:translateY(30px);transition:all .7s cubic-bezier(.16,1,.3,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+</style>
+</head>
+<body>
+<div class="prog" id="prog"></div>
+
+<nav class="nav" id="nav"><div class="nav-in">
+  <div class="nav-logo">СНАЧАЛА СПРОСИ <span>ИИ</span></div>
+  <a href="http://65.109.237.234:3100" target="_blank" class="nav-cta">🎓 AI Академия</a>
+</div></nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <canvas id="particles" style="position:absolute;inset:0;pointer-events:none;z-index:0"></canvas>
+  <div class="hero-orbit" aria-hidden="true"><span class="orb-dot orb-d1"></span><span class="orb-dot orb-d2"></span><span class="orb-dot orb-d3"></span></div>
+  <div class="hero-c">
+    <div class="badge">Стандарт компании EMCO · 2026</div>
+    <h1><span class="a1">Сначала</span><br><span class="a2">спроси ИИ</span></h1>
+    <p style="font-family:var(--font-d);font-weight:600;font-size:clamp(0.85rem,2vw,1.1rem);letter-spacing:3px;text-transform:uppercase;margin-bottom:1.2rem;background:linear-gradient(90deg,var(--cyan),var(--accent),var(--purple));-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none">Новая операционная система компании</p>
+    <p class="hero-sub">Новый принцип работы для 5 000 сотрудников. Перед каждой задачей спроси себя: может ли ИИ помочь сделать это быстрее, качественнее или безопаснее?</p>
+    <a href="http://65.109.237.234:3100" target="_blank" class="hero-cta">🎓 Начать обучение в AI Академии</a>
+    <div class="hero-stats reveal">
+      <div class="h-stat"><div class="h-stat-num cyan">30<span>сек</span></div><div class="h-stat-label">вместо 30 мин на письмо</div></div>
+      <div class="h-stat"><div class="h-stat-num accent">2<span>мин</span></div><div class="h-stat-label">первый запрос к ИИ</div></div>
+      <div class="h-stat"><div class="h-stat-num purple">24<span>/7</span></div><div class="h-stat-label">агент работает без выходных</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONVEYOR ===== -->
+<div class="conv" aria-hidden="true"><div class="conv-track"><span>СНАЧАЛА СПРОСИ ИИ</span><span>◆</span><span>РАЗРЕЗ</span><span>◆</span><span>КОНВЕЙЕР</span><span>◆</span><span>ПОРТ</span><span>◆</span><span>ЦИФРОВОЕ УПРАВЛЕНИЕ</span><span>◆</span><span>СНАЧАЛА СПРОСИ ИИ</span><span>◆</span><span>РАЗРЕЗ</span><span>◆</span><span>КОНВЕЙЕР</span><span>◆</span><span>ПОРТ</span><span>◆</span><span>ЦИФРОВОЕ УПРАВЛЕНИЕ</span><span>◆</span><span>СНАЧАЛА СПРОСИ ИИ</span><span>◆</span><span>РАЗРЕЗ</span><span>◆</span><span>КОНВЕЙЕР</span><span>◆</span><span>ПОРТ</span><span>◆</span><span>ЦИФРОВОЕ УПРАВЛЕНИЕ</span><span>◆</span></div></div>
+
+<!-- ===== CEO ===== -->
+<div class="light">
+<section id="ceo">
+  <div class="container">
+    <div class="slabel">Обращение генерального директора</div>
+    <div class="ceo-block reveal">
+      <div class="ceo-bg">
+        <p>Дорогие коллеги,</p>
+        <p>Я являюсь горячим сторонником использования искусственного интеллекта в работе. Многие из вас уже начали применять эти инструменты и показывают действительно впечатляющие результаты.</p>
+        <p>Понимаю, что не всем легко быстро войти в эту тему и выйти на экспоненциальный рост продуктивности. Недавно я сделал небольшой практический курс для всех, кому это интересно.</p>
+        <p>Он состоит из коротких практических блоков и упражнений. Если вы пройдёте их и попробуете применить в работе, это может существенно расширить ваше понимание возможностей AI и заметно повысить личную эффективность.</p>
+        <p>Попробуйте зарегистрироваться и пройти практикум:</p>
+        <a href="http://65.109.237.234:3100" target="_blank" class="ceo-link">🎓 Перейти в AI Академию →</a>
+        <div class="ceo-sig">
+          <div class="ceo-ava">МК</div>
+          <div><div style="font-family:var(--font-d);font-weight:700;font-size:.95rem;color:var(--text)">Максим Куземченко</div><div style="color:var(--muted);font-size:.85rem">Генеральный директор Восточной Горнорудной Компании</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== IMPACT NUMBERS ===== -->
+</div>
+<div class="impact">
+  <div class="impact-grid reveal">
+    <div class="impact-card"><div class="impact-num cyan">5 000</div><div class="impact-label">сотрудников в компании</div></div>
+    <div class="impact-card"><div class="impact-num accent">1 000</div><div class="impact-label">ИТР подключаются к ИИ</div></div>
+    <div class="impact-card"><div class="impact-num purple">10+</div><div class="impact-label">ИИ-инструментов доступно</div></div>
+    <div class="impact-card"><div class="impact-num green">6</div><div class="impact-label">отделов уже используют</div></div>
+  </div>
+</div>
+
+<!-- ===== DEFINITION + STANDARDS ===== -->
+<div class="light">
+<section id="standards">
+  <div class="container">
+    <div class="slabel">Стандарт компании</div>
+    <h2 class="stitle">Что значит «Сначала спроси ИИ»</h2>
+    <p class="sdesc">Это не факультатив. Это новый стандарт работы каждого сотрудника.</p>
+    <div class="def-card reveal">
+      <p>«Сначала спроси ИИ» — это принцип, при котором перед началом <strong>любой задачи</strong> сотрудник задаёт себе вопрос: <strong>«Может ли ИИ помочь мне сделать это быстрее, качественнее или безопаснее?»</strong></p>
+    </div>
+    <div class="cols2 reveal">
+      <div class="col-no"><h3>✕ Это НЕ значит</h3><ul><li><span class="col-icon">✕</span>Замена людей машинами</li><li><span class="col-icon">✕</span>Требование стать программистом</li><li><span class="col-icon">✕</span>Дань моде или принуждение</li><li><span class="col-icon">✕</span>Слепое доверие к ответам ИИ</li></ul></div>
+      <div class="col-yes"><h3>✓ Это значит</h3><ul><li><span class="col-icon">✓</span>Новый навык, как когда-то Excel</li><li><span class="col-icon">✓</span>Привычка думать эффективнее</li><li><span class="col-icon">✓</span>Усиление каждого сотрудника</li><li><span class="col-icon">✓</span>Ответственность остаётся за человеком</li></ul></div>
+    </div>
+    <div class="std-header reveal" style="margin-top:3rem"><h3>⚡ Что компания ожидает от каждого сотрудника ИТР</h3><p>«Сначала спроси ИИ» — не опция, а корпоративный стандарт</p></div>
+    <div class="std-grid reveal">
+      <div class="standard-card std-card"><div class="std-icon">📅</div><h4>Ежедневное использование</h4><p>ИИ — часть рабочего процесса. Тексты, анализ, отчёты — каждый день.</p></div>
+      <div class="standard-card std-card"><div class="std-icon">🎓</div><h4>Прохождение обучения</h4><p>Воркшопы и AI Академия обязательны. Знание ИИ = знание 1С.</p></div>
+      <div class="standard-card std-card"><div class="std-icon">🔄</div><h4>Обмен опытом</h4><p>Промпты и кейсы — в общую базу знаний. Изоляция тормозит всех.</p></div>
+      <div class="standard-card std-card"><div class="std-icon">🤖</div><h4>Инициатива в автоматизации</h4><p>Задача повторяется? Создай агента. Инициатива поощряется.</p></div>
+      <div class="standard-card std-card"><div class="std-icon">🔒</div><h4>Безопасность</h4><p>Правила работы с данными не обсуждаются. Нарушение = инцидент.</p></div>
+      <div class="standard-card std-card"><div class="std-icon">✅</div><h4>Ответственность</h4><p>ИИ помогает, но финальное решение — ваша зона ответственности.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 5 PRINCIPLES ===== -->
+<section id="principles" style="background:#fff">
+  <div class="container">
+    <div class="slabel">Основа</div>
+    <h2 class="stitle">5 принципов</h2>
+    <p class="sdesc">Запомни эти правила — и ты уже на полпути.</p>
+    <div class="prin-grid reveal">
+      <div class="principle-card prin-card"><div class="prin-num">1</div><h3>Сначала спроси ИИ</h3><p>Может ли ИИ помочь?</p></div>
+      <div class="principle-card prin-card"><div class="prin-num">2</div><h3>Доверяй, но проверяй</h3><p>ИИ может ошибаться</p></div>
+      <div class="principle-card prin-card"><div class="prin-num">3</div><h3>Данные = безопасность</h3><p>Не отправляй лишнего</p></div>
+      <div class="principle-card prin-card"><div class="prin-num">4</div><h3>Делись опытом</h3><p>Помогай коллегам</p></div>
+      <div class="principle-card prin-card"><div class="prin-num">5</div><h3>Развивайся</h3><p>Это образ мышления</p></div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ===== TOOLS ===== -->
+<section class="tools-sec">
+  <div class="container">
+    <div class="slabel">Экосистема</div>
+    <h2 class="stitle white">Инструменты ИИ</h2>
+    <p class="sdesc">Одобренные и рекомендованные инструменты.</p>
+    <div class="tcat reveal"><div class="tcat-label appr">✓ Одобренные</div><div class="tgrid">
+      <div class="tool-card tcard"><h4>Claude</h4><p>Аналитика, код, сложные задачи, глубокий анализ</p><span class="ttag all">Всем</span></div>
+      <div class="tool-card tcard"><h4>ChatGPT</h4><p>Тексты, брейншторм, быстрые задачи</p><span class="ttag all">Всем</span></div>
+      <div class="tool-card tcard"><h4>Cursor</h4><p>AI-редактор кода. Автодополнение, генерация</p><span class="ttag dev">Разработка</span></div>
+    </div></div>
+    <div class="tcat reveal"><div class="tcat-label reco">★ Рекомендованные</div><div class="tgrid">
+      <div class="tool-card tcard"><h4>Midjourney</h4><p>Генерация изображений, визуализации</p><span class="ttag cre">Визуал</span></div>
+      <div class="tool-card tcard"><h4>Gemini</h4><p>Google AI. Большие данные, мультимодальность</p><span class="ttag all">Всем</span></div>
+      <div class="tool-card tcard"><h4>Perplexity</h4><p>AI-поиск с источниками, факт-чекинг</p><span class="ttag all">Всем</span></div>
+      <div class="tool-card tcard"><h4>DeepSeek</h4><p>Мощная модель для аналитики и кода</p><span class="ttag dev">Аналитика</span></div>
+      <div class="tool-card tcard"><h4>Grok</h4><p>xAI. Быстрый ассистент с актуальной инфо</p><span class="ttag all">Всем</span></div>
+      <div class="tool-card tcard"><h4>DALL-E</h4><p>Генерация изображений. Встроен в ChatGPT</p><span class="ttag cre">Визуал</span></div>
+      <div class="tool-card tcard"><h4>Copilot</h4><p>Microsoft AI. Word, Excel, Outlook, Teams</p><span class="ttag fin">Офис</span></div>
+    </div></div>
+  </div>
+</section>
+
+<div class="conv" aria-hidden="true"><div class="conv-track"><span>СНАЧАЛА СПРОСИ ИИ</span><span>◆</span><span>РАЗРЕЗ</span><span>◆</span><span>КОНВЕЙЕР</span><span>◆</span><span>ПОРТ</span><span>◆</span><span>ЦИФРОВОЕ УПРАВЛЕНИЕ</span><span>◆</span><span>СНАЧАЛА СПРОСИ ИИ</span><span>◆</span><span>РАЗРЕЗ</span><span>◆</span><span>КОНВЕЙЕР</span><span>◆</span><span>ПОРТ</span><span>◆</span><span>ЦИФРОВОЕ УПРАВЛЕНИЕ</span><span>◆</span><span>СНАЧАЛА СПРОСИ ИИ</span><span>◆</span><span>РАЗРЕЗ</span><span>◆</span><span>КОНВЕЙЕР</span><span>◆</span><span>ПОРТ</span><span>◆</span><span>ЦИФРОВОЕ УПРАВЛЕНИЕ</span><span>◆</span></div></div>
+
+<!-- ===== AGENTS ===== -->
+<section class="agents-sec">
+  <div class="container">
+    <div class="slabel">Следующий уровень</div>
+    <h2 class="stitle">Что такое AI-агенты</h2>
+    <p class="sdesc">Агент — это ИИ, который выполняет задачу автономно, без ручного ввода каждый раз.</p>
+    <div class="agt-exp reveal">
+      <div class="agt-exp-text">
+        <h3>Обычный чат vs Агент</h3>
+        <p><strong>Обычный запрос:</strong> каждый раз открываете ChatGPT, пишете задачу, копируете ответ. Ручной труд.</p>
+        <p><strong>Агент:</strong> один раз описываете правила — дальше он работает сам. Каждый день, каждую смену.</p>
+        <p>Если обычный ИИ — <strong>калькулятор</strong>, то агент — <strong>автопилот</strong>.</p>
+      </div>
+      <div class="agt-diag">
+        <div class="agt-step"><div class="agt-num">1</div><span style="font-size:.9rem;color:var(--text);font-weight:500">Получает данные (почта, таблица, датчик)</span></div>
+        <div class="agt-arr">↓</div>
+        <div class="agt-step"><div class="agt-num">2</div><span style="font-size:.9rem;color:var(--text);font-weight:500">Обрабатывает по заданным правилам</span></div>
+        <div class="agt-arr">↓</div>
+        <div class="agt-step"><div class="agt-num">3</div><span style="font-size:.9rem;color:var(--text);font-weight:500">Создаёт результат (отчёт, письмо, алерт)</span></div>
+        <div class="agt-arr">↓</div>
+        <div class="agt-step"><div class="agt-num">4</div><span style="font-size:.9rem;color:var(--text);font-weight:500">Отправляет куда нужно</span></div>
+      </div>
+    </div>
+    <div class="agt-vs reveal">
+      <div class="agt-vs-card manual"><h4>🖐 Без агента</h4><p>Диспетчер вручную собирает данные из 3 систем, сводит в Excel, пишет отчёт. 40 минут.</p></div>
+      <div class="agt-vs-card agent"><h4>🤖 С агентом</h4><p>Агент сам забирает данные в 7:00, формирует отчёт, отправляет в Telegram. 2 минуты на проверку.</p></div>
+    </div>
+    <h3 style="font-family:var(--font-d);font-weight:700;font-size:1.1rem;color:var(--text);margin-bottom:1.2rem">Примеры агентов по отделам</h3>
+    <div class="agt-grid reveal">
+      <div class="agent-card agt-card"><div class="agt-dept">Инженеры</div><h4>Мониторинг конвейера</h4><p>Алерты по аномалиям датчиков до поломки.</p></div>
+      <div class="agent-card agt-card"><div class="agt-dept">Инженеры</div><h4>Технические акты</h4><p>Генерация актов осмотра из формы по шаблону.</p></div>
+      <div class="agent-card agt-card"><div class="agt-dept">Диспетчеры</div><h4>Сменный отчёт</h4><p>Автосбор данных, отчёт с простоями и отклонениями.</p></div>
+      <div class="agent-card agt-card"><div class="agt-dept">Логистика</div><h4>Погрузка в порту</h4><p>Оптимальный план с учётом судов и погоды.</p></div>
+      <div class="agent-card agt-card"><div class="agt-dept">Закупки</div><h4>Сравнение КП и анализ договоров</h4><p>Извлекает цены из КП, анализирует условия договоров, формирует сводку.</p></div>
+      <div class="agent-card agt-card"><div class="agt-dept">HR</div><h4>Онбординг</h4><p>Серия сообщений новому сотруднику.</p></div>
+      <div class="agent-card agt-card"><div class="agt-dept">Финансы</div><h4>Финансовая аналитика</h4><p>Сводки, отклонения от бюджета, прогнозы затрат.</p></div>
+      <div class="agent-card agt-card"><div class="agt-dept">Все отделы</div><h4>База знаний</h4><p>Ответы по регламентам и ГОСТам 24/7.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ROLES ===== -->
+<div class="light">
+<section id="roles">
+  <div class="container">
+    <div class="slabel">Применение</div>
+    <h2 class="stitle">Для каждой роли</h2>
+    <p class="sdesc">Конкретные примеры и агенты для вашего отдела.</p>
+    <div class="roles-grid reveal">
+      <div class="role-card"><div class="role-hdr"><div class="role-ico">⚙️</div><h3>Инженеры</h3></div><ul><li>Анализ датчиков: аномалии до поломки</li><li>Техотчёты и акты за минуты</li><li>Расчёт режимов оборудования</li><li>Поиск по ГОСТам</li></ul><div class="role-agt"><div class="role-agt-label">🤖 Агенты</div><div class="role-agt-item">Мониторинг конвейера</div><div class="role-agt-item">Генератор ведомостей</div></div></div>
+      <div class="role-card"><div class="role-hdr"><div class="role-ico">🚛</div><h3>Логистика и порт</h3></div><ul><li>Оптимизация погрузки</li><li>Прогноз погоды для операций</li><li>Узкие места: разрез→порт</li><li>Сменные отчёты</li></ul><div class="role-agt"><div class="role-agt-label">🤖 Агенты</div><div class="role-agt-item">Планировщик погрузки</div><div class="role-agt-item">Трекер узких мест</div></div></div>
+      <div class="role-card"><div class="role-hdr"><div class="role-ico">📊</div><h3>Бухгалтерия и финансы</h3></div><ul><li>Формирование финансовых отчётов и справок</li><li>Письма контрагентам и в госорганы</li><li>Сверка документов и поиск расхождений</li><li>Анализ отклонений от бюджета</li></ul><div class="role-agt"><div class="role-agt-label">🤖 Агенты</div><div class="role-agt-item">Бюджетный контроль — отклонения</div><div class="role-agt-item">Генератор писем</div></div></div>
+      <div class="role-card"><div class="role-hdr"><div class="role-ico">🛒</div><h3>Закупки</h3></div><ul><li>Сравнение КП поставщиков</li><li>Анализ договоров: условия, сроки, риски</li><li>Генерация техзаданий</li><li>Мониторинг цен</li></ul><div class="role-agt"><div class="role-agt-label">🤖 Агенты</div><div class="role-agt-item">Сравнение КП — автотаблица</div><div class="role-agt-item">Анализатор договоров из PDF</div></div></div>
+      <div class="role-card"><div class="role-hdr"><div class="role-ico">👥</div><h3>HR и кадры</h3></div><ul><li>Описания вакансий</li><li>Анализ опросов</li><li>Материалы онбординга</li><li>Планы развития</li></ul><div class="role-agt"><div class="role-agt-label">🤖 Агенты</div><div class="role-agt-item">Онбординг-бот</div><div class="role-agt-item">Анализатор опросов</div></div></div>
+      <div class="role-card"><div class="role-hdr"><div class="role-ico">📡</div><h3>Диспетчеры</h3></div><ul><li>Прогноз нагрузки</li><li>Формирование отчётов</li><li>Анализ простоев</li><li>Справки по регламентам</li></ul><div class="role-agt"><div class="role-agt-label">🤖 Агенты</div><div class="role-agt-item">Сменный отчёт за 2 мин</div><div class="role-agt-item">Аналитик простоев</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROMPTING ===== -->
+<section id="prompting" style="background:#fff">
+  <div class="container">
+    <div class="slabel">Навык №1</div>
+    <h2 class="stitle">Как говорить с ИИ</h2>
+    <p class="sdesc">Хороший промпт = хороший результат.</p>
+    <div class="prompt-formula reveal"><span><em>Роль</em> + <em>Задача</em> + <em>Контекст</em> + <em>Формат</em> = Отличный результат</span></div>
+    <div class="prompt-cmp reveal">
+      <div class="prompt-bad"><h3>✕ Плохой промпт</h3><div class="prompt-ex">«Напиши письмо»</div><div class="prompt-ex">«Посчитай данные»</div><div class="prompt-ex">«Сделай отчёт»</div></div>
+      <div class="prompt-good"><h3>✓ Хороший промпт</h3><div class="prompt-ex">«Напиши официальное письмо поставщику с претензией по срокам. Тон строгий, деловой. Ждали 30 дней вместо 14.»</div><div class="prompt-ex">«Таблица простоев за март. Найди топ-5 причин по длительности и предложи меры.»</div><div class="prompt-ex">«Отчёт по погрузке: объёмы, отклонения, причины. Формат: таблица + выводы.»</div></div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ===== SAFETY ===== -->
+<section class="safety-sec">
+  <div class="container">
+    <div class="slabel">Обязательно</div>
+    <h2 class="stitle">Правила безопасности</h2>
+    <p class="sdesc">Нарушение — серьёзный инцидент.</p>
+    <div class="safety-grid reveal">
+      <div class="safety-can"><h3>✓ МОЖНО</h3><ul><li>✅ Обезличенные данные и статистику</li><li>✅ Общие вопросы по процессам</li><li>✅ Черновики без персданных</li><li>✅ Общедоступную информацию</li></ul></div>
+      <div class="safety-cant"><h3>✕ НЕЛЬЗЯ</h3><ul><li>🚫 Персданные (ФИО, паспорта, зарплаты)</li><li>🚫 Коммерческую тайну, цены контрактов</li><li>🚫 Пароли, ключи, токены</li><li>🚫 Данные АСУТП и безопасности</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<div class="light">
+<section id="faq">
+  <div class="container">
+    <div class="slabel">Ответы</div>
+    <h2 class="stitle">Частые вопросы</h2>
+    <p class="sdesc">Честные ответы на то, что волнует.</p>
+    <div class="faq-list reveal">
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">«ИИ заберёт мою работу?»<span class="ch">+</span></div><div class="faq-a"><p>Нет. ИИ забирает рутину. Сотрудник с ИИ стоит больше на рынке труда.</p></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">«Я не технарь»<span class="ch">+</span></div><div class="faq-a"><p>ИИ понимает обычный русский. Если пишете в мессенджере — уже умеете.</p></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">«А если ИИ ошибётся?»<span class="ch">+</span></div><div class="faq-a"><p>Принцип №2: «Доверяй, но проверяй». ИИ — черновик, не финал.</p></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">«Не опасно ли для данных?»<span class="ch">+</span></div><div class="faq-a"><p>Опасно, если не то. Смотри раздел «Безопасность».</p></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">«Нет времени»<span class="ch">+</span></div><div class="faq-a"><p>Первый запрос — 2 минуты. Письмо за 30 мин → ИИ за 30 сек.</p></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">«Что такое агент?»<span class="ch">+</span></div><div class="faq-a"><p>ChatGPT — диалог. Агент — автопилот: правила один раз, он работает сам.</p></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">«Это обязательно?»<span class="ch">+</span></div><div class="faq-a"><p>Да. «Сначала спроси ИИ» — корпоративный стандарт для каждого ИТР.</p></div></div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ===== ACADEMY FULL-WIDTH CTA ===== -->
+<section class="academy">
+  <div class="slabel">Практикум от Генерального директора</div>
+  <h2>AI Академия</h2>
+  <p>Практический курс Максима Куземченко. Короткие блоки и упражнения для ознакомления с ИИ. Зарегистрируйтесь и начните применять.</p>
+  <a href="http://65.109.237.234:3100" target="_blank" class="acad-btn">🎓 Начать обучение →</a>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="cta">
+  <blockquote>«Не ИИ заменит человека.<br>Человек с ИИ заменит человека без ИИ»</blockquote>
+  <p class="sub">Начни сегодня. Первый запрос — 2 минуты.</p>
+  <a href="http://65.109.237.234:3100" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;padding:14px 32px;border-radius:14px;text-decoration:none;font-weight:700;font-size:1rem;margin-top:2rem;box-shadow:0 8px 30px rgba(255,61,90,.3);transition:all .3s" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='none'">🎓 Перейти в AI Академию</a>
+</section>
+
+<footer>«Сначала спроси ИИ» · Стандарт компании EMCO · 2026</footer>
+
+<script>
+// Scroll progress
+const pr=document.getElementById('prog');
+window.addEventListener('scroll',()=>{pr.style.width=(scrollY/(document.documentElement.scrollHeight-innerHeight)*100)+'%'},{passive:true});
+
+// Nav hide
+let ly=0;const nv=document.getElementById('nav');
+window.addEventListener('scroll',()=>{const y=scrollY;if(y>ly&&y>200)nv.classList.add('hide');else nv.classList.remove('hide');ly=y},{passive:true});
+
+// Particles
+(()=>{const c=document.getElementById('particles'),hero=document.querySelector('.hero');const ctx=c.getContext('2d');let W,H,ps=[];
+function rz(){W=c.width=hero.offsetWidth;H=c.height=hero.offsetHeight}rz();window.addEventListener('resize',rz);
+for(let i=0;i<50;i++)ps.push({x:Math.random()*2000,y:Math.random()*1200,r:Math.random()*1.8+.4,dx:(Math.random()-.5)*.3,dy:(Math.random()-.5)*.3,o:Math.random()*.4+.1});
+function draw(){ctx.clearRect(0,0,W,H);ps.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(34,211,238,${p.o})`;ctx.fill();p.x+=p.dx;p.y+=p.dy;if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0});
+for(let i=0;i<ps.length;i++)for(let j=i+1;j<ps.length;j++){const dx=ps[i].x-ps[j].x,dy=ps[i].y-ps[j].y,d=Math.sqrt(dx*dx+dy*dy);
+if(d<120){ctx.strokeStyle=`rgba(34,211,238,${.06*(1-d/120)})`;ctx.lineWidth=.5;ctx.beginPath();ctx.moveTo(ps[i].x,ps[i].y);ctx.lineTo(ps[j].x,ps[j].y);ctx.stroke()}}
+requestAnimationFrame(draw)}draw()})();
+
+// Reveal
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');
+const cards=e.target.querySelectorAll('.std-card,.prin-card,.tcard,.agt-card,.role-card,.agt-vs-card,.agt-step,.impact-card');
+cards.forEach((c,i)=>{c.style.opacity='0';c.style.transform='translateY(20px)';c.style.transition=`all .5s cubic-bezier(.16,1,.3,1) ${i*.08}s`;requestAnimationFrame(()=>requestAnimationFrame(()=>{c.style.opacity='1';c.style.transform='translateY(0)'}))})
+}})},{threshold:.12,rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// Card glow
+document.querySelectorAll('.std-card,.prin-card,.tcard,.agt-card,.role-card').forEach(c=>{c.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect();c.style.setProperty('--mx',`${e.clientX-r.left}px`);c.style.setProperty('--my',`${e.clientY-r.top}px`)})});
+
+// FAQ accordion
+function toggleFaq(q){const a=q.nextElementSibling,ch=q.querySelector('.ch');const isOpen=a.classList.contains('open');
+document.querySelectorAll('.faq-a').forEach(f=>{f.classList.remove('open');f.style.maxHeight='0'});
+document.querySelectorAll('.faq-q .ch').forEach(c=>{c.textContent='+';c.style.transform='none'});
+if(!isOpen){a.classList.add('open');a.style.maxHeight=a.scrollHeight+'px';ch.textContent='−';ch.style.transform='rotate(180deg)'}}
+</script>
+</body>
+</html>
