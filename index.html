@@ -267,6 +267,11 @@ footer{background:var(--dark);padding:2rem;text-align:center;color:rgba(255,255,
 .reveal{opacity:0;transform:translateY(30px);transition:all .7s cubic-bezier(.16,1,.3,1)}
 .reveal.visible{opacity:1;transform:translateY(0)}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+  .reveal{opacity:1!important;transform:none!important}
+  .hero-orbit{display:none}
+}
 </style>
 </head>
 <body>
@@ -534,13 +539,13 @@ let ly=0;const nv=document.getElementById('nav');
 window.addEventListener('scroll',()=>{const y=scrollY;if(y>ly&&y>200)nv.classList.add('hide');else nv.classList.remove('hide');ly=y},{passive:true});
 
 // Particles
-(()=>{const c=document.getElementById('particles'),hero=document.querySelector('.hero');const ctx=c.getContext('2d');let W,H,ps=[];
+(()=>{const c=document.getElementById('particles'),hero=document.querySelector('.hero');const ctx=c.getContext('2d');let W,H,ps=[];const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
 function rz(){W=c.width=hero.offsetWidth;H=c.height=hero.offsetHeight}rz();window.addEventListener('resize',rz);
 for(let i=0;i<50;i++)ps.push({x:Math.random()*2000,y:Math.random()*1200,r:Math.random()*1.8+.4,dx:(Math.random()-.5)*.3,dy:(Math.random()-.5)*.3,o:Math.random()*.4+.1});
 function draw(){ctx.clearRect(0,0,W,H);ps.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(34,211,238,${p.o})`;ctx.fill();p.x+=p.dx;p.y+=p.dy;if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0});
 for(let i=0;i<ps.length;i++)for(let j=i+1;j<ps.length;j++){const dx=ps[i].x-ps[j].x,dy=ps[i].y-ps[j].y,d=Math.sqrt(dx*dx+dy*dy);
 if(d<120){ctx.strokeStyle=`rgba(34,211,238,${.06*(1-d/120)})`;ctx.lineWidth=.5;ctx.beginPath();ctx.moveTo(ps[i].x,ps[i].y);ctx.lineTo(ps[j].x,ps[j].y);ctx.stroke()}}
-requestAnimationFrame(draw)}draw()})();
+if(!reduce)requestAnimationFrame(draw)}draw()})();
 
 // Reveal
 const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');
